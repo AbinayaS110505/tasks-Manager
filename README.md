@@ -8,30 +8,15 @@ Welcome to my cross-platform **React Native Todo Task Management App**, develope
 
 - 🔐 Social Login with **Google**
 - 📝 Full Task Management (Create, Read, Update, Delete)
-- 🗂️ Task Fields:
-  - Title
-  - Description
-  - Due Date
-  - Status (Open / Completed)
-  - Priority
-- 🌑 Dark-themed UI:
-  - Black background splash screen
-  - Rotating glowing circle animation
-  - Smooth UI transitions and hover/zoom buttons
 - 📱 Responsive design for Android & iOS
 - 🔁 Pull-to-refresh and swipe-to-delete
 - 🧭 Floating Action Button (FAB) for quick task creation
 - 🛠 Built using React Native (Expo)
-
 ---
-
-
-
-
 ## 📽 Demo Video
 
 🎥 
-
+https://github.com/AbinayaS110505/taskmanager-video
 ---
 
 ## 🧑‍💻 Tech Stack
@@ -45,11 +30,9 @@ Welcome to my cross-platform **React Native Todo Task Management App**, develope
 
 ## ⚙️ Setup Instructions
 npm install
-
 OR
 yarn install
 npx expo start
-
 
  “This project is a part of a hackathon run by"
 
