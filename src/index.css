@@ -131,11 +131,11 @@
 }
 
 @layer components {
-  /* Glowing Orb Animation */
+  /* Glowing Orb Animation - Only shadow rotates, text stays still */
   .orb-glow {
     background: var(--gradient-primary);
     box-shadow: var(--shadow-glow);
-    animation: orb-pulse 3s ease-in-out infinite, orb-rotate 8s linear infinite;
+    animation: orb-pulse 3s ease-in-out infinite;
   }
 
   .orb-glow::before {
@@ -147,7 +147,7 @@
     filter: blur(8px);
     opacity: 0.7;
     z-index: -1;
-    animation: glow-pulse 2s ease-in-out infinite alternate;
+    animation: glow-pulse 2s ease-in-out infinite alternate, orb-rotate 8s linear infinite;
   }
 
   /* Floating Particles */

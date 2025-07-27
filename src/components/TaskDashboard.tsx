@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import CreateTaskModal from './CreateTaskModal';
 
 interface Task {
   id: string;
@@ -14,10 +15,39 @@ interface Task {
   priority: 'low' | 'medium' | 'high';
 }
 
+const STORAGE_KEY = 'taskorb-tasks';
+
 const TaskDashboard = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('all');
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
+  // Load tasks from localStorage on component mount
+  useEffect(() => {
+    const savedTasks = localStorage.getItem(STORAGE_KEY);
+    if (savedTasks) {
+      try {
+        setTasks(JSON.parse(savedTasks));
+      } catch (error) {
+        console.error('Error loading tasks from localStorage:', error);
+      }
+    }
+  }, []);
+
+  // Save tasks to localStorage whenever tasks change
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+  }, [tasks]);
+
+  const createTask = (taskData: Omit<Task, 'id' | 'status'>) => {
+    const newTask: Task = {
+      ...taskData,
+      id: Date.now().toString(),
+      status: 'open'
+    };
+    setTasks(prev => [newTask, ...prev]);
+  };
 
   const filteredTasks = tasks.filter(task => {
     const matchesSearch = task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -143,6 +173,7 @@ const TaskDashboard = () => {
         {/* Floating Action Button */}
         <div className="fixed bottom-6 right-6">
           <Button
+            onClick={() => setIsCreateModalOpen(true)}
             size="lg"
             className="w-16 h-16 rounded-full bg-gradient-primary hover:shadow-glow-strong transition-all duration-300 hover:scale-110"
           >
@@ -151,6 +182,13 @@ const TaskDashboard = () => {
             </svg>
           </Button>
         </div>
+
+        {/* Create Task Modal */}
+        <CreateTaskModal
+          isOpen={isCreateModalOpen}
+          onClose={() => setIsCreateModalOpen(false)}
+          onCreateTask={createTask}
+        />
       </div>
     </div>
   );
